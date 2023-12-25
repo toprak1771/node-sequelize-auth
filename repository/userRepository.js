@@ -1,7 +1,7 @@
 const User = require("./../models/user");
 const UserPoolRole = require("./../models/UserPoolRole");
 
-exports.addUsertoDb =  (user) => {
+exports.addUsertoDb = (user) => {
   const userId = User.create({
     name: user.name,
     surname: user.surname,
@@ -16,17 +16,17 @@ exports.addUsertoDb =  (user) => {
     .catch((err) => {
       console.log(err);
     });
-    return new Promise((resolve,reject) => {
-        return resolve(userId);
-    });
+  return new Promise((resolve, reject) => {
+    return resolve(userId);
+  });
 };
 
-exports.addPoolUserRole = (roleId,poolId,userId) => {
-   const query = UserPoolRole.create({
-        userId:userId,
-        roleId:roleId,
-        poolId:poolId
-    })
+exports.addPoolUserRole = (roleId, poolId, userId) => {
+  const query = UserPoolRole.create({
+    userId: userId,
+    roleId: roleId,
+    poolId: poolId,
+  })
     .then((result) => {
       console.log("UserPoolRole add successfully.");
       return result;
@@ -34,7 +34,21 @@ exports.addPoolUserRole = (roleId,poolId,userId) => {
     .catch((err) => {
       console.log(err);
     });
-    return new Promise((resolve,reject) => {
-        return resolve(query);
+  return new Promise((resolve, reject) => {
+    return resolve(query);
+  });
+};
+
+exports.getUserByMail = (email) => {
+  const query = User.findOne({ where: { mail: email } })
+    .then((result) => {
+      console.log("result:",result);
+      return result;
+    })
+    .catch((err) => {
+      console.log(err);
     });
+  return new Promise((resolve, reject) => {
+    return resolve(query);
+  });
 };
